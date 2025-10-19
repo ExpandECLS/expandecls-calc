@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expanded ECLS Criteria and Strategies</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --success-color: #27ae60;
+            --success-bg: #e8f8f0;
+            --danger-color: #e74c3c;
+            --danger-bg: #fdedec;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-color: #e0e6ed;
+            --bg-light: #f5f9fc;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: var(--text-dark);
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .protocol-version {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            background-color: white;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:first-child {
+            border-radius: 8px 0 0 0;
+        }
+        
+        .tab:last-child {
+            border-radius: 0 8px 0 0;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 0 8px 8px 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .calculator.active {
+            display: block;
+        }
+        
+        .protocol-instruction {
+            background-color: #e8f4fc;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .result-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid;
+        }
+        
+        .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .decision {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        .success {
+            background-color: var(--success-bg);
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+        
+        .danger {
+            background-color: var(--danger-bg);
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .calculation-steps {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .disclaimer {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+        
+        .recommendation {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-dark);
+        }
+        
+        .post-ecmo-message {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .post-ecmo-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .post-ecmo-link:hover {
+            background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Expanded ECLS Criteria and Strategies</h1>
+            <div class="protocol-version">Domain Protocol #OZUHN-004-2 (v3.0, 08-Apr-2025)</div>
+        </header>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab('dynamic')">ΔP<sub>L-dyn</sub></div>
+            <div class="tab" onclick="openTab('elastance')">Elastance</div>
+        </div>
+        
+        <!-- Dynamic ΔP Calculator -->
+        <div id="dynamic-calculator" class="calculator active">
+            <div class="protocol-instruction">
+                <strong>Protocol Method:</strong> Perform expiratory hold, record trough pressure with next effort (record as = PEEP if no efforts)
+            </div>
+            
+            <div class="input-group">
+                <label for="treatmentPhase">Treatment Phase:</label>
+                <select id="treatmentPhase">
+                    <option value="maintenance">Maintenance (Days 3-14)</option>
+                    <option value="post-ecmo">Post-ECMO (Day 14+)</option>
+                </select>
+            </div>
+            
+            <div id="dynamic-inputs">
+                <div class="input-group">
+                    <label for="troughPressure">Trough Pressure (cm H<sub>2</sub>O):</label>
+                    <input type="number" id="troughPressure" step="0.1" placeholder="During expiratory hold">
+                </div>
+                
+                <div class="input-group">
+                    <label for="peep-dynamic">PEEP (cm H<sub>2</sub>O):</label>
+                    <input type="number" id="peep-dynamic" min="0" step="0.1" placeholder="e.g., 10">
+                </div>
+                
+                <div class="input-group">
+                    <label for="peakPressure">Peak Airway Pressure (cm H<sub>2</sub>O):</label>
+                    <input type="number" id="peakPressure" min="0" step="0.1" placeholder="From ventilator">
+                </div>
+                
+                <button onclick="calculateDynamicDeltaP()">CALCULATE ΔP<sub>L-dyn</sub></button>
+            </div>
+            
+            <div id="post-ecmo-message" class="post-ecmo-message" style="display: none;">
+                <p>For Post-ECMO phase, please use the Driving Pressure Limited strategy:</p>
+                <a href="https://practical-trial.shinyapps.io/practical_app/" target="_blank" class="post-ecmo-link">Access Driving Pressure Limited Strategy Tool</a>
+            </div>
+            
+            <div id="dynamic-result-container" style="display: none;">
+                <div class="value" id="deltaPoccValue"></div>
+                <div class="value" id="deltaPLdynValue"></div>
+                
+                <div class="result-box" id="dynamic-decision-box">
+                    <div class="decision" id="dynamic-decision-text"></div>
+                </div>
+                
+                <div class="calculation-steps">
+                    <strong>Calculation:</strong><br>
+                    ΔP<sub>occ</sub> = Trough Pressure - PEEP<br>
+                    ΔP<sub>L-dyn</sub> = (Peak Pressure - PEEP) - (0.67 × ΔP<sub>occ</sub>)
+                </div>
+                
+                <div class="recommendation">
+                    Note: These recommendations are based on protocol targets but should be interpreted in the full clinical context. Always refer to the complete protocol and clinical judgment for patient management decisions.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Elastance Calculator -->
+        <div id="elastance-calculator" class="calculator">
+            <div class="protocol-instruction">
+                <strong>Protocol Method:</strong> Calculate normalized respiratory elastance (E<sub>RS</sub>) = Driving Pressure / (Tidal Volume / Predicted Body Weight)
+            </div>
+            
+            <div class="input-group">
+                <label for="drivingPressure">Driving Pressure (P<sub>PLAT</sub> - PEEP, cm H<sub>2</sub>O):</label>
+                <input type="number" id="drivingPressure" min="0" step="0.1" placeholder="e.g., 15">
+            </div>
+            
+            <div class="input-group">
+                <label for="tidalVolume">Tidal Volume (V<sub>T</sub>, mL):</label>
+                <input type="number" id="tidalVolume" min="0" step="1" placeholder="e.g., 400">
+            </div>
+            
+            <div class="input-group">
+                <label for="pbw">Predicted Body Weight (PBW, kg):</label>
+                <input type="number" id="pbw" min="0" step="0.1" placeholder="e.g., 70">
+            </div>
+            
+            <button onclick="calculateElastance()">CALCULATE ELASTANCE</button>
+            
+            <div id="elastance-result-container" style="display: none;">
+                <div class="value" id="elastanceValue"></div>
+                
+                <div class="calculation-steps">
+                    <strong>Calculation:</strong><br>
+                    E<sub>RS</sub> = Driving Pressure / (V<sub>T</sub> / PBW)<br>
+                </div>
+                
+                <div class="recommendation">
+                    Note: This calculation is provided for informational purposes only. Please refer to the full protocol for inclusion criteria and clinical decision-making.
+                </div>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            Important: This tool provides protocol-based calculations but does not replace clinical judgment. All patient management decisions should be made in accordance with the full protocol and clinical context. No patient data is stored or transmitted.
+        </div>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all calculators
+            document.getElementById('elastance-calculator').classList.remove('active');
+            document.getElementById('dynamic-calculator').classList.remove('active');
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected calculator and mark tab as active
+            document.getElementById(tabName + '-calculator').classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            // Handle dynamic calculator phase selection
+            if (tabName === 'dynamic') {
+                handlePhaseChange();
+            }
+        }
+        
+        function handlePhaseChange() {
+            const phase = document.getElementById('treatmentPhase').value;
+            const dynamicInputs = document.getElementById('dynamic-inputs');
+            const postEcmoMessage = document.getElementById('post-ecmo-message');
+            const resultContainer = document.getElementById('dynamic-result-container');
+            
+            if (phase === 'post-ecmo') {
+                dynamicInputs.style.display = 'none';
+                postEcmoMessage.style.display = 'block';
+                resultContainer.style.display = 'none';
+            } else {
+                dynamicInputs.style.display = 'block';
+                postEcmoMessage.style.display = 'none';
+            }
+        }
+        
+        function calculateElastance() {
+            const drivingPressure = parseFloat(document.getElementById('drivingPressure').value);
+            const tidalVolume = parseFloat(document.getElementById('tidalVolume').value);
+            const pbw = parseFloat(document.getElementById('pbw').value);
+            
+            if (isNaN(drivingPressure) || isNaN(tidalVolume) || isNaN(pbw)) {
+                alert("Please enter all required values");
+                return;
+            }
+            
+            if (pbw <= 0) {
+                alert("Predicted Body Weight must be greater than 0");
+                return;
+            }
+            
+            const elastance = drivingPressure / (tidalVolume / pbw);
+            document.getElementById('elastanceValue').innerHTML = `E<sub>RS</sub> = ${elastance.toFixed(1)} cmH<sub>2</sub>O/(mL/kg PBW)`;
+            
+            document.getElementById('elastance-result-container').style.display = 'block';
+        }
+        
+        function calculateDynamicDeltaP() {
+            const troughPressure = parseFloat(document.getElementById('troughPressure').value);
+            const peep = parseFloat(document.getElementById('peep-dynamic').value);
+            const peakPressure = parseFloat(document.getElementById('peakPressure').value);
+            const phase = document.getElementById('treatmentPhase').value;
+            
+            if (isNaN(troughPressure) || isNaN(peep) || isNaN(peakPressure)) {
+                alert("Please enter Trough Pressure, PEEP, and Peak Airway Pressure");
+                return;
+            }
+            
+            const deltaPocc = troughPressure - peep;
+            const deltaPLdyn = (peakPressure - peep) - (0.67 * deltaPocc);
+            
+            document.getElementById('deltaPoccValue').innerHTML = `ΔP<sub>occ</sub> = ${deltaPocc.toFixed(1)} cm H<sub>2</sub>O`;
+            document.getElementById('deltaPLdynValue').innerHTML = `ΔP<sub>L-dyn</sub> = ${deltaPLdyn.toFixed(1)} cm H<sub>2</sub>O`;
+            
+            const resultContainer = document.getElementById('dynamic-result-container');
+            const decisionBox = document.getElementById('dynamic-decision-box');
+            const decisionText = document.getElementById('dynamic-decision-text');
+            
+            const threshold = 20;
+            const phaseName = "Maintenance Phase (Days 3-14)";
+            
+            // Round the deltaPLdyn value to the nearest integer
+            const roundedDeltaPLdyn = Math.round(deltaPLdyn);
+            
+            if (roundedDeltaPLdyn > threshold) {
+                decisionBox.className = "result-box danger";
+                decisionText.innerHTML = `
+                    <strong>${phaseName} Protocol Target:</strong> ΔP<sub>L-dyn</sub> ≤${threshold} cmH<sub>2</sub>O<br><br>
+                    <strong>Current Value:</strong> ${deltaPLdyn.toFixed(1)} cmH<sub>2</sub>O (rounded to ${roundedDeltaPLdyn})<br><br>
+                    <strong>Status:</strong> Above target range<br><br>
+                    <strong>Consider:</strong><br>
+                    • Adjusting sweep gas flow (up to 10 L/min)<br>
+                    • Titrating PEEP to optimize compliance<br>
+                    • Modifying inspiratory pressure/flow<br>
+                    • Assessing sedation if respiratory effort remains high<br><br>
+                    Refer to Protocol Section 9.1 for complete guidance
+                `;
+            } else {
+                decisionBox.className = "result-box success";
+                decisionText.innerHTML = `
+                    <strong>${phaseName} Protocol Target:</strong> ΔP<sub>L-dyn</sub> ≤${threshold} cmH<sub>2</sub>O<br><br>
+                    <strong>Current Value:</strong> ${deltaPLdyn.toFixed(1)} cmH<sub>2</sub>O (rounded to ${roundedDeltaPLdyn})<br><br>
+                    <strong>Status:</strong> Within target range<br><br>
+                    Continue current management per protocol guidelines<br><br>
+                    Refer to Protocol Section 9.1 for complete guidance
+                `;
+            }
+            
+            resultContainer.style.display = 'block';
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('treatmentPhase').addEventListener('change', handlePhaseChange);
+        });
+    </script>
+</body>
+</html>
